@@ -1,17 +1,8 @@
-/**
- * Here are what developers are expected to fill in
- * Replace url with the host you wish to send requests to
- * @param {string} url
- */
-const url = 'https://example.com'
+import jwt from 'jsonwebtoken'
+import { getAssetFromKV } from '@cloudflare/kv-asset-handler'
 
-/**
- * Helper function
- * Here is what my help does
- * @param {string} path
- */
-function helper(path) {
-  return url + '/' + path
+function getKey(header, callback) {
+  // TODO look up public key in _cloudflare_s3_config/keys/ based on header
 }
 
 /**
@@ -19,8 +10,14 @@ function helper(path) {
  * @param {Request} request
  */
 async function handleRequest(request) {
-  helper(request.url.path)
-  return new Response('Hello worker!', { status: 200 })
+  const bearer = request.headers.get('Authentication');
+  try {
+    const decoded = jwt.verify(bearer, getKey);
+    // TODO look up acl based on request and decoded id
+    return getAssetFromKV()
+  } catch {
+    return new Response('permission denied', { status: 403 })
+  }
 }
 
 addEventListener('fetch', event => {

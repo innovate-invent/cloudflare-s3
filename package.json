@@ -1,4 +1,5 @@
 {
+  "name": "cloudflare-s3",
   "version": "1.0.0",
   "description": "package for creating workers templates",
   "main": "index.js",
@@ -8,9 +9,14 @@
   },
   "author": "{{ authors }}",
   "license": "ISC",
+  "dependencies": {
+    "@cloudflare/kv-asset-handler": "0.0.9",
+    "jsonwebtoken": "^8.5.1"
+  },
   "devDependencies": {
     "husky": "^2.1.0",
-    "prettier": "^1.17.0"
+    "prettier": "^1.17.0",
+    "@cloudflare/workers-types": "^1.0.6"
   },
   "husky": {
     "hooks": {
